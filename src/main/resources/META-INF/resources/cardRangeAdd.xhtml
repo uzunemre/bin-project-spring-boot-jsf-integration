@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Bin Add</title>
+    <style type="text/css">
+
+        .ui-messages-info, .ui-message-info {
+            color: #000000;
+            background-color: #60f72f;
+            border-color: #000000;
+        }
+
+        .ui-messages-error, .ui-message-error {
+            color: #b94a48;
+            background-color: #ffffff;
+        }
+
+        .ui-message-info, .ui-message-error, .ui-message-warn, .ui-message-fatal {
+            border: 0px solid;
+        }
+
+    </style>
+</h:head>
+
+<f:metadata>
+    <f:event listener="#{binAddSupport.init()}" type="preRenderView"/>
+</f:metadata>
+
+<h:body>
+    <h:form id="form">
+        <p:messages id="messages" globalOnly="true" showDetail="true" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+
+        <div>
+            <div class="ui-g">
+                <div class="ui-g-2"><p:outputLabel for="issuer" value="Üye İsmi"/></div>
+                <div class="ui-g-2"><p:selectOneMenu style="width: 83%" id="issuer" converter="entityConverter"
+                                                     required="true"
+                                                     requiredMessage="Zorunlu alan boş bırakılamaz"
+                                                     value="#{binAddSupport.selectedIssuer}">
+                    <f:selectItem itemLabel="Seçiniz" itemValue="" noSelectionOption="true"/>
+                    <f:selectItems var="issuer" itemValue="#{issuer}" value="#{binAddSupport.issuerList}"
+                                   itemLabel="#{issuer.name}"/>
+                </p:selectOneMenu></div>
+                <div class="ui-g-4">
+                    <p:message for="issuer" display="text"/>
+                </div>
+
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-2"><p:outputLabel value="BIN"/></div>
+                <div class="ui-g-2"><p:inputText id="txtBin" required="true"
+                                                 requiredMessage="Zorunlu alan boş bırakılamaz"
+                                                 validatorMessage="6 karakter giriniz"
+                                                 style="width:92%"
+                                                 value="#{binAddSupport.instance.bin}">
+                    <p:keyFilter regEx="/[\d\-]/"/>
+                    <f:validateLength maximum="6"/>
+                    <p:ajax event="blur" update="binDisabled1 binDisabled2"
+                            listener="#{binAddSupport.binListener()}"/>
+                </p:inputText></div>
+                <div class="ui-g-4">
+                    <p:message for="txtBin" display="text"/>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-2"><p:outputLabel value="BIN Aralık Başlangıç"/></div>
+                <div class="ui-g-2">
+                    <p:inputText disabled="true" id="binDisabled1" style="width:40%"
+                                 value="#{binAddSupport.binNumber}"/>
+                    <p:inputText id="txtBinStart" required="true" requiredMessage="Zorunlu alan boş bırakılamaz"
+                                 validatorMessage="16 karakter giriniz"
+                                 style="width:50%"
+                                 value="#{binAddSupport.instance.binStart}">
+                        <p:keyFilter regEx="/[\d\-]/"/>
+                        <f:validateLength minimum="10" maximum="10"/>
+                    </p:inputText></div>
+                <div class="ui-g-4">
+                    <p:message for="txtBinStart" display="text"/>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-2"><p:outputLabel value="BIN Aralık Bitiş"/></div>
+                <div class="ui-g-2">
+                    <p:inputText disabled="true" id="binDisabled2" style="width:40%"
+                                 value="#{binAddSupport.binNumber}"/>
+                    <p:inputText id="txtBinEnd" required="true" requiredMessage="Zorunlu alan boş bırakılamaz"
+                                 validatorMessage="16 karakter giriniz" style="width:50%"
+                                 value="#{binAddSupport.instance.binEnd}">
+                        <p:keyFilter regEx="/[\d\-]/"/>
+                        <f:validateLength minimum="10" maximum="10"/>
+                    </p:inputText></div>
+                <div class="ui-g-4">
+                    <p:message for="txtBinEnd" display="text"/>
+                </div>
+            </div>
+        </div>
+
+        <h:panelGrid columns="1">
+            <p:commandButton disabled="#{binAddSupport.inserted}" value="Kaydet" id="save" update="form"
+                             action="#{binAddSupport.save}"/>
+        </h:panelGrid>
+
+    </h:form>
+</h:body>
+</html>
