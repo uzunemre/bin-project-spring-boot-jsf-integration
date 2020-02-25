@@ -21,23 +21,6 @@ public class IssuerServiceImpl implements IssuerService {
     @Autowired
     private IssuerDao issuerDao;
 
-    @Autowired
-    private GenericDao genericDao;
-
-    @Autowired
-    private PropertyService propertyService;
-
-    @PostConstruct
-    public void init() {
-        if (propertyService.isDevelopmentMode()) {
-            genericDao.createQuery("create table ISSUER (ID IDENTITY, NAME VARCHAR (50), STATUS VARCHAR (1))");
-            issuerDao.save(new Issuer(15, "Vakıfbank", EntityStatusEnum.A.name()));
-            issuerDao.save(new Issuer(46, "Akbank", EntityStatusEnum.A.name()));
-            issuerDao.save(new Issuer(64, "İş Bankası", EntityStatusEnum.A.name()));
-            issuerDao.save(new Issuer(67, "Yapı Kredi", EntityStatusEnum.A.name()));
-        }
-    }
-
     @Override
     public List<Issuer> findAllOrderByNameAsc() {
         return issuerDao.findAll()

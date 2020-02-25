@@ -16,7 +16,7 @@ public class BinDaoImpl implements BinDao {
     @Override
     public void save(Bin bin) {
         String insertSql =
-                "insert into BIN(ISSUER_ID,BIN,BIN_START,BIN_END) " +
+                "INSERT INTO BIN(ISSUER_ID,BIN,BIN_START,BIN_END) " +
                         "values (:issuerIdParam, :binParam, :binStartPram, :binEndParam)";
         Connection con = sql2o.open();
         con.createQuery(insertSql)

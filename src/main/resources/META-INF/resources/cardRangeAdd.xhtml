@@ -62,7 +62,7 @@
                                                  style="width:92%"
                                                  value="#{binAddSupport.instance.bin}">
                     <p:keyFilter regEx="/[\d\-]/"/>
-                    <f:validateLength maximum="6"/>
+                    <f:validateLength minimum="6" maximum="6"/>
                     <p:ajax event="blur" update="binDisabled1 binDisabled2"
                             listener="#{binAddSupport.binListener()}"/>
                 </p:inputText></div>
