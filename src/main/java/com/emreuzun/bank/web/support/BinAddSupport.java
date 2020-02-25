@@ -53,6 +53,7 @@ public class BinAddSupport implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "", "Yaptığınız işlem başarıyla gerçekleştirilmiştir"));
             } else {
+                // todo messages properties
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "", "Girdiğiniz değer sistemde önceden tanımlanmıştır."));
             }
